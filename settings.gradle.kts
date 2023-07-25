@@ -21,3 +21,4 @@ rootProject.name = "MagicTheGatheringKMM"
 
 include("desktop-app")
 include("shared-ui")
+include("shared-data")

@@ -19,8 +19,10 @@ kotlin {
     sourceSets {
         val desktopMain by getting {
             dependencies {
+                implementation(project(":shared-data"))
                 implementation(compose.desktop.currentOs)
                 implementation(compose.material)
+                implementation(compose.runtime)
                 implementation("media.kamel:kamel-image:0.7.0")
                 implementation("io.ktor:ktor-client-java:2.3.2")
             }
