@@ -44,10 +44,10 @@ fun MagicCardDetail(magicCard: MagicCard = testCard, modifier: Modifier = Modifi
             }
             Column(modifier = Modifier.absoluteOffset(x = (MiniCardWidth + 16).dp).zIndex(0f)) {
                 Text(magicCard.cardName)
-                TextWithInlineImages(magicCard.manaCost)
+                ManaCost(magicCard.manaCost)
             }
             Column(modifier = Modifier.padding(start = 8.dp, top = 16.dp, end = 8.dp).zIndex(0f)) {
-                TextWithInlineImages(magicCard.oracleText)
+                OracleText(magicCard.oracleText)
                 if (magicCard.oracleText.isNotBlank()) {
                     Divider(
                         thickness = 1.dp,
@@ -58,6 +58,24 @@ fun MagicCardDetail(magicCard: MagicCard = testCard, modifier: Modifier = Modifi
             }
         }
     }
+}
+
+@Composable
+fun ManaCost(text: String) {
+    TextWithInlineImages(
+        text = text,
+        symbols = ScryfallSymbolsStore.keys(),
+        inlineContentMap = ScryfallSymbolsStore.getMap().toInlineTextContentMap(::toInlineTextContent)
+    )
+}
+
+@Composable
+fun OracleText(text: String) {
+    TextWithInlineImages(
+        text = text,
+        symbols = ScryfallSymbolsStore.keys(),
+        inlineContentMap = ScryfallSymbolsStore.getMap().toInlineTextContentMap(::toInlineTextContent)
+    )
 }
 
 @Composable
@@ -114,35 +132,6 @@ data class MagicCard(
     val largeUrl: String,
     val borderCropUrl: String,
 )
-
-@Composable
-fun TextWithInlineImages(text: String,
-                         modifier: Modifier = Modifier,
-                         fontStyle: FontStyle = FontStyle.Normal) {
-    val symbols = ScryfallSymbolsStore.keys()
-    Text(
-        text = buildAnnotatedString {
-            var match = text.findAnyOf(symbols)
-            var start = 0
-            while (match != null) {
-                val begin = match.first
-                val length = match.second.length
-
-                append(text.substring(start, begin))
-                appendInlineContent(text.substring(begin, begin + length))
-
-                start = begin + length
-                match = text.findAnyOf(symbols, start)
-            }
-            if (start < text.length) {
-                append(text.substring(start))
-            }
-        },
-        color = Color.Black,
-        fontStyle = fontStyle,
-        modifier  = modifier,
-        inlineContent = ScryfallSymbolsStore.getMap().toInlineTextContentMap(::toInlineTextContent))
-}
 
 fun toInlineTextContent(symbol: ScryfallSymbol): InlineTextContent {
     return InlineTextContent(

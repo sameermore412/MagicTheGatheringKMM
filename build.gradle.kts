@@ -5,6 +5,7 @@ plugins {
     id("com.android.application") version androidGradlePluginVersion apply false
     id("com.android.library") version androidGradlePluginVersion apply false
     kotlin("jvm") version kotlinVersion apply false
+    id("org.jetbrains.kotlin.android") version "1.8.20" apply false
 }
 
 allprojects {
