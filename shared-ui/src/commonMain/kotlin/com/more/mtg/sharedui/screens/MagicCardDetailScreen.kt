@@ -13,6 +13,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.more.mtg.sharedui.widgets.MagicCardDetail
 import com.more.mtg.sharedui.widgets.MagicLoadingIndicator
+import com.more.shareddata.network.provideScryFallService
 import kotlinx.coroutines.delay
 
 @Composable
@@ -22,6 +23,8 @@ fun MagicCardDetailScreen() {
         LaunchedEffect("") {
             delay(2000)
             isLoadingHidden = true
+            val card = provideScryFallService().getCard("d52114f0-a55a-4d0c-afa1-70395d669ffe")
+            println(card.name)
 
         }
         MagicCardDetail()
