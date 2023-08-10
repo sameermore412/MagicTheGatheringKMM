@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.InlineTextContent
-import androidx.compose.foundation.text.appendInlineContent
 import androidx.compose.material.Divider
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -20,11 +19,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.Placeholder
 import androidx.compose.ui.text.PlaceholderVerticalAlign
-import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
+import com.more.mtg.sharedui.CardAspectRatio
+import com.more.mtg.sharedui.MiniCardWidth
 import com.more.shareddata.ScryfallSymbol
 import com.more.shareddata.ScryfallSymbolsStore
 import io.kamel.image.KamelImage
@@ -109,19 +109,15 @@ fun MtgCardImage(url: String, modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun MtgImage(url: String, modifier: Modifier = Modifier) {
+fun MtgImage(url: String, contentDescription: String = "", modifier: Modifier = Modifier) {
     val painter = asyncPainterResource(data = url) {
     }
 
     KamelImage(resource = painter,
-        contentDescription = "",
+        contentDescription = contentDescription,
         contentScale = ContentScale.FillWidth,
         modifier = modifier)
 }
-
-
-const val MiniCardWidth = 96
-const val CardAspectRatio = 5/7f
 
 data class MagicCard(
     val cardName: String,
@@ -141,7 +137,7 @@ fun toInlineTextContent(symbol: ScryfallSymbol): InlineTextContent {
             placeholderVerticalAlign = PlaceholderVerticalAlign.Center
         )
     ) {
-        MtgImage(symbol.svgUri ?: "", Modifier)
+        MtgImage(symbol.svgUri ?: "", modifier = Modifier)
     }
 }
 

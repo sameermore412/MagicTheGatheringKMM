@@ -12,6 +12,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
 import com.more.mtg.sharedui.screens.MagicCardDetailScreen
+import com.more.mtg.sharedui.screens.MagicSetsScreen
 import com.more.mtg.sharedui.widgets.MagicCardDetail
 import com.more.mtg.sharedui.widgets.MagicLoadingIndicator
 import com.more.mtg.sharedui.widgets.testCard
@@ -21,7 +22,8 @@ fun main() = application {
         title = "Sample App",
         onCloseRequest = ::exitApplication,
     ) {
-        MagicCardDetailScreen()
+        //MagicCardDetailScreen()
+        MagicSetsScreen()
     }
 }
 
