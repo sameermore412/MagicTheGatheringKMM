@@ -1,11 +1,13 @@
 package com.more.mtg.sharedui.widgets
 
 import androidx.compose.foundation.HorizontalScrollbar
+import androidx.compose.foundation.VerticalScrollbar
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -34,6 +36,31 @@ actual fun <T> HorizontalScrollingRow(itemList: List<T>,
         }
 
         HorizontalScrollbar(
+            modifier = Modifier.align(Alignment.CenterHorizontally).height(8.dp),
+            adapter = rememberScrollbarAdapter(
+                scrollState = state
+            )
+        )
+    }
+}
+
+@Composable
+actual fun <T> ScrollingColumn(itemList: List<T>,
+                               contentPadding: Dp,
+                               paddingBetweenChildren: Dp,
+                               itemContent: @Composable (item: T) -> Unit) {
+    val state = rememberLazyListState()
+    Column {
+        LazyColumn(
+            state = state,
+            contentPadding = PaddingValues(contentPadding),
+            verticalArrangement = Arrangement.spacedBy(paddingBetweenChildren)
+        ) {
+            items(items = itemList) { itemData ->
+                itemContent(itemData)
+            }
+        }
+        VerticalScrollbar(
             modifier = Modifier.align(Alignment.CenterHorizontally).height(8.dp),
             adapter = rememberScrollbarAdapter(
                 scrollState = state

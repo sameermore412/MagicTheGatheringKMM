@@ -23,6 +23,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import cafe.adriel.voyager.core.screen.Screen
+import cafe.adriel.voyager.navigator.LocalNavigator
+import cafe.adriel.voyager.navigator.currentOrThrow
 import com.more.mtg.sharedui.CardAspectRatio
 import com.more.mtg.sharedui.models.LCE
 import com.more.mtg.sharedui.widgets.HorizontalScrollingRow
@@ -32,9 +35,17 @@ import com.more.shareddata.network.provideScryFallService
 import com.more.shareddata.network.scryfall.ScryfallMagicSet
 import kotlinx.coroutines.async
 
+object MagicSetsScreen: Screen {
+    @Composable
+    override fun Content() {
+        MagicSetsScreen()
+    }
+}
+
 @Composable
 fun MagicSetsScreen() {
     var state: LCE<List<List<ScryfallMagicSet>>> by remember { mutableStateOf(LCE.Loading()) }
+    val navigator = LocalNavigator.currentOrThrow
     LaunchedEffect("") {
         val officialSets =  async { provideScryFallService().getSets().data.filter { it.setType == "core" } }
         val latestSets =  async { provideScryFallService().getSets().data.sortedByDescending { it.releasedAt } }
@@ -42,14 +53,14 @@ fun MagicSetsScreen() {
     }
     LCEContent(
         state = state,
-        content = {setsList -> MagicSets(setsList)},
+        content = {setsList -> MagicSets(setsList) {setId -> navigator.push(MagicSetDetailScreen(setId))} },
         errorContent = {error -> Text("error") },
     )
 }
 
 
 @Composable
-fun MagicSets(magicSets: List<List<ScryfallMagicSet>>) {
+fun MagicSets(magicSets: List<List<ScryfallMagicSet>>, onSetClicked: (setId: String) -> Unit) {
     Column(modifier = Modifier.fillMaxSize()) {
         Text("Official Sets", style = MaterialTheme.typography.h5, modifier = Modifier.padding(start = 8.dp))
         HorizontalScrollingRow(
@@ -57,7 +68,7 @@ fun MagicSets(magicSets: List<List<ScryfallMagicSet>>) {
             contentPadding = 8.dp,
             paddingBetweenChildren = 16.dp,
         ) {itemData ->
-            MagicSet(itemData){}
+            MagicSet(itemData, onSetClicked)
         }
         Spacer(modifier = Modifier.height(16.dp))
         Text("Latest Sets", style = MaterialTheme.typography.h5, modifier = Modifier.padding(start = 8.dp))
@@ -66,7 +77,7 @@ fun MagicSets(magicSets: List<List<ScryfallMagicSet>>) {
             contentPadding = 8.dp,
             paddingBetweenChildren = 16.dp,
         ) {itemData ->
-            MagicSet(itemData){}
+            MagicSet(itemData, onSetClicked)
         }
     }
 }

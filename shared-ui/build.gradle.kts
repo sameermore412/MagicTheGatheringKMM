@@ -25,6 +25,7 @@ kotlin {
 
 
     sourceSets {
+        val voyagerVersion = "1.0.0-rc05"
         val commonMain by getting {
             dependencies {
                 implementation(project(":shared-data"))
@@ -33,6 +34,10 @@ kotlin {
                 implementation(compose.foundation)
                 implementation(compose.material)
                 implementation("media.kamel:kamel-image:0.7.0")
+                implementation("cafe.adriel.voyager:voyager-navigator:$voyagerVersion")
+                implementation("cafe.adriel.voyager:voyager-bottom-sheet-navigator:$voyagerVersion")
+                implementation("cafe.adriel.voyager:voyager-tab-navigator:$voyagerVersion")
+                implementation("cafe.adriel.voyager:voyager-transitions:$voyagerVersion")
             }
         }
 

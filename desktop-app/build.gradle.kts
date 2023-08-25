@@ -9,12 +9,17 @@ kotlin {
     }
 
     sourceSets {
+        val voyagerVersion = "1.0.0-rc05"
         val jvmMain by getting {
             dependencies {
                 implementation(project(":shared-ui"))
                 implementation(compose.desktop.currentOs)
                 implementation(compose.material)
                 implementation(compose.foundation)
+                implementation(compose.animation)
+                implementation(compose.animationGraphics)
+                implementation("cafe.adriel.voyager:voyager-navigator:$voyagerVersion")
+                implementation("cafe.adriel.voyager:voyager-transitions:$voyagerVersion")
             }
         }
     }

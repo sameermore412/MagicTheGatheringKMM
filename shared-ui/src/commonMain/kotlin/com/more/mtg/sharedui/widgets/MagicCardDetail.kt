@@ -9,7 +9,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.InlineTextContent
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Divider
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -32,30 +34,29 @@ import io.kamel.image.asyncPainterResource
 
 @Composable
 fun MagicCardDetail(magicCard: MagicCard = testCard, modifier: Modifier = Modifier) {
-    Box(modifier = modifier.fillMaxSize()) {
-        Column(modifier = modifier.fillMaxSize()) {
-            Box(modifier = Modifier.zIndex(1000f)) {
-                HeroImage(magicCard)
-                MiniCardImage(magicCard, modifier = Modifier
-                    .zIndex(1000f)
-                    .align(Alignment.BottomStart)
-                    .padding(start = 8.dp)
-                    .absoluteOffset(y = (MiniCardWidth / 2).dp))
+    val scrollState = rememberScrollState()
+    Column(modifier = modifier.fillMaxSize().verticalScroll(scrollState)) {
+        Box(modifier = Modifier.zIndex(1000f)) {
+            HeroImage(magicCard)
+            MiniCardImage(magicCard, modifier = Modifier
+                .zIndex(1000f)
+                .align(Alignment.BottomStart)
+                .padding(start = 8.dp)
+                .absoluteOffset(y = (MiniCardWidth / 2).dp))
+        }
+        Column(modifier = Modifier.absoluteOffset(x = (MiniCardWidth + 16).dp).zIndex(0f)) {
+            Text(magicCard.cardName)
+            ManaCost(magicCard.manaCost)
+        }
+        Column(modifier = Modifier.padding(start = 8.dp, top = 16.dp, end = 8.dp).zIndex(0f)) {
+            OracleText(magicCard.oracleText)
+            if (magicCard.oracleText.isNotBlank()) {
+                Divider(
+                    thickness = 1.dp,
+                    modifier = Modifier.padding(8.dp)
+                )
             }
-            Column(modifier = Modifier.absoluteOffset(x = (MiniCardWidth + 16).dp).zIndex(0f)) {
-                Text(magicCard.cardName)
-                ManaCost(magicCard.manaCost)
-            }
-            Column(modifier = Modifier.padding(start = 8.dp, top = 16.dp, end = 8.dp).zIndex(0f)) {
-                OracleText(magicCard.oracleText)
-                if (magicCard.oracleText.isNotBlank()) {
-                    Divider(
-                        thickness = 1.dp,
-                        modifier = Modifier.padding(8.dp)
-                    )
-                }
-                Text(magicCard.flavorText, fontStyle = FontStyle.Italic)
-            }
+            Text(magicCard.flavorText, fontStyle = FontStyle.Italic)
         }
     }
 }
