@@ -21,8 +21,8 @@ import com.more.mtg.sharedui.models.LCE
 import com.more.mtg.sharedui.widgets.LCEContent
 import com.more.mtg.sharedui.widgets.MtgImage
 import com.more.mtg.sharedui.widgets.ScrollingColumn
-import com.more.shareddata.network.provideScryFallService
 import com.more.shareddata.network.scryfall.ScryfallMagicCard
+import com.more.shareddata.network.scryfall.provideScryfallRepository
 import kotlinx.coroutines.async
 
 data class MagicSetDetailScreen(val setId: String): Screen {
@@ -31,8 +31,7 @@ data class MagicSetDetailScreen(val setId: String): Screen {
         val navigator = LocalNavigator.currentOrThrow
         var state: LCE<List<ScryfallMagicCard>> by remember { mutableStateOf(LCE.Loading()) }
         LaunchedEffect("") {
-            val set = provideScryFallService().getSetForSetId(setId)
-            val cards =  async { provideScryFallService().getCardsFromSearch(set.searchUri).data }
+            val cards = async {  provideScryfallRepository().getMagicCardsInSet(setId) }
             state = LCE.Content(cards.await())
         }
 
