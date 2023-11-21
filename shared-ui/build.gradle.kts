@@ -1,6 +1,7 @@
 plugins {
     kotlin("multiplatform")
     id("org.jetbrains.compose") version composeVersion
+    kotlin("native.cocoapods") // Cocoapods plugin
     id("com.android.library")
 }
 
@@ -22,7 +23,22 @@ kotlin {
             }
         }
     }
+    ios()
+    iosSimulatorArm64()
 
+    //Cocoapods configuration
+    cocoapods {
+        version = "1.0"
+        summary = "Shared Compose UI Components"
+        name = "sharedui" //Pod spec name
+        ios.deploymentTarget = "15.2"
+        homepage = "Link to the Shared Module homepage"
+
+        framework {
+            baseName = "SharedComposeUI" //This is the name of the package that will be referenced in swift code
+            isStatic = true
+        }
+    }
 
     sourceSets {
         val voyagerVersion = "1.0.0-rc05"
@@ -55,6 +71,11 @@ kotlin {
                 implementation("media.kamel:kamel-image:0.7.0")
                 implementation("io.ktor:ktor-client-java:2.3.2")
             }
+        }
+        val iosSimulatorArm64Main by getting
+
+        val iosMain by getting {
+            iosSimulatorArm64Main.dependsOn(this)
         }
     }
 }

@@ -1,10 +1,25 @@
 plugins {
     kotlin("multiplatform")
     kotlin("plugin.serialization") version "1.9.0"
+    kotlin("native.cocoapods") // Cocoapods plugin
 }
 
 kotlin {
     jvm("desktop")
+    ios()
+    iosSimulatorArm64()
+
+    cocoapods {
+        summary = "Some description for the Shared Module"
+        homepage = "Link to the Shared Module homepage"
+        version = "1.0"
+        name = "shareddata"
+        ios.deploymentTarget = "15.2"
+        framework {
+            baseName = "SharedData"
+            isStatic = true
+        }
+    }
 
     sourceSets {
         val commonMain by getting {
@@ -18,6 +33,12 @@ kotlin {
         }
         val desktopMain by getting {
             dependsOn(commonMain)
+        }
+
+        val iosSimulatorArm64Main by getting
+
+        val iosMain by getting {
+            iosSimulatorArm64Main.dependsOn(this)
         }
     }
 }
