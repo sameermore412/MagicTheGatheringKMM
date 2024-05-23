@@ -1,3 +1,6 @@
+import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 plugins {
     kotlin("multiplatform")
     id("org.jetbrains.compose") version composeVersion
@@ -8,22 +11,12 @@ plugins {
 
 kotlin {
     androidTarget() {
-        compilations.all {
-            kotlinOptions {
-                jvmTarget = JavaVersion.VERSION_17.toString()
-            }
+        @OptIn(ExperimentalKotlinGradlePluginApi::class)
+        compilerOptions {
+            jvmTarget = JvmTarget.JVM_17
         }
     }
-    jvm("desktop") {
-//        compilations.all {
-//            kotlinOptions {
-//                jvmTarget = JavaVersion.VERSION_17.toString()
-//            }
-//            compilerOptions.configure {
-//                jvmToolchain(JavaVersion.VERSION_17.ordinal)
-//            }
-//        }
-    }
+    jvm("desktop") {}
     iosX64()
     iosArm64()
     iosSimulatorArm64()
