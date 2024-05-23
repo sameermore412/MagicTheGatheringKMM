@@ -7,6 +7,5 @@ target 'ios-app' do
 
   # Pods for ios-app
   pod 'sharedui', :path => '../shared-ui'
-  pod 'shareddata', :path => '../shared-data'
 
 end

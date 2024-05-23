@@ -1,29 +1,24 @@
+import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 plugins {
     kotlin("multiplatform")
     id("org.jetbrains.compose") version composeVersion
+    kotlin("plugin.compose")
     kotlin("native.cocoapods") // Cocoapods plugin
     id("com.android.library")
 }
 
 kotlin {
     androidTarget() {
-        compilations.all {
-            kotlinOptions {
-                jvmTarget = JavaVersion.VERSION_17.toString()
-            }
+        @OptIn(ExperimentalKotlinGradlePluginApi::class)
+        compilerOptions {
+            jvmTarget = JvmTarget.JVM_17
         }
     }
-    jvm("desktop") {
-        compilations.all {
-            kotlinOptions {
-                jvmTarget = JavaVersion.VERSION_17.toString()
-            }
-            compilerOptions.configure {
-                jvmToolchain(JavaVersion.VERSION_17.ordinal)
-            }
-        }
-    }
-    ios()
+    jvm("desktop") {}
+    iosX64()
+    iosArm64()
     iosSimulatorArm64()
 
     //Cocoapods configuration
@@ -72,10 +67,19 @@ kotlin {
                 implementation("io.ktor:ktor-client-java:2.3.2")
             }
         }
-        val iosSimulatorArm64Main by getting
 
-        val iosMain by getting {
-            iosSimulatorArm64Main.dependsOn(this)
+        val iosMain by creating {
+            dependsOn(commonMain)
+        }
+
+        val iosX64Main by getting {
+            dependsOn(iosMain)
+        }
+        val iosArm64Main by getting {
+            dependsOn(iosMain)
+        }
+        val iosSimulatorArm64Main by getting {
+            dependsOn(iosMain)
         }
     }
 }
@@ -98,9 +102,5 @@ android {
 
     kotlin {
         jvmToolchain(JavaVersion.VERSION_17.ordinal)
-    }
-
-    composeOptions {
-        kotlinCompilerExtensionVersion = androidComposeCompilerVersion
     }
 }
