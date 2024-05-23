@@ -1,12 +1,11 @@
 plugins {
     kotlin("multiplatform")
-    id("org.jetbrains.compose") version composeVersion
+    id("org.jetbrains.kotlin.plugin.compose")
+    id("org.jetbrains.compose")
 }
 
 kotlin {
-    jvm {
-        withJava()
-    }
+    jvm {}
 
     sourceSets {
         val voyagerVersion = "1.0.0-rc05"
