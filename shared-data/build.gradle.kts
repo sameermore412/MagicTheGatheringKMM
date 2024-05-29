@@ -6,7 +6,8 @@ plugins {
 
 kotlin {
     jvm("desktop")
-    ios()
+    iosX64()
+    iosArm64()
     iosSimulatorArm64()
 
     cocoapods {
@@ -35,10 +36,18 @@ kotlin {
             dependsOn(commonMain)
         }
 
-        val iosSimulatorArm64Main by getting
+        val iosMain by creating {
+            dependsOn(commonMain)
+        }
 
-        val iosMain by getting {
-            iosSimulatorArm64Main.dependsOn(this)
+        val iosX64Main by getting {
+            dependsOn(iosMain)
+        }
+        val iosArm64Main by getting {
+            dependsOn(iosMain)
+        }
+        val iosSimulatorArm64Main by getting {
+            dependsOn(iosMain)
         }
     }
 }
