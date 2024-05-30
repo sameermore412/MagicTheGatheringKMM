@@ -22,4 +22,5 @@ rootProject.name = "MagicTheGatheringKMM"
 include("desktop-app")
 include("shared-ui")
 include("shared-data")
-include(":android-app")
+include("android-app")
+include("web-app")
