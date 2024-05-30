@@ -35,7 +35,7 @@ import com.more.shareddata.network.provideScryFallService
 import com.more.shareddata.network.scryfall.ScryfallMagicSet
 import kotlinx.coroutines.async
 
-object MagicSetsScreen: Screen {
+object MagicSetsScreenSinglton: Screen {
     @Composable
     override fun Content() {
         MagicSetsScreen()

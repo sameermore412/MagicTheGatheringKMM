@@ -1,5 +1,6 @@
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.targets.js.dsl.ExperimentalWasmDsl
 
 plugins {
     kotlin("multiplatform")
@@ -17,6 +18,13 @@ kotlin {
         }
     }
     jvm("desktop") {}
+    js {
+        browser()
+        useEsModules()
+    }
+    wasmJs {
+        browser()
+    }
     iosX64()
     iosArm64()
     iosSimulatorArm64()
@@ -36,7 +44,7 @@ kotlin {
     }
 
     sourceSets {
-        val voyagerVersion = "1.0.0-rc05"
+        val voyagerVersion = "1.1.0-beta01"
         val commonMain by getting {
             dependencies {
                 implementation(project(":shared-data"))
@@ -44,7 +52,7 @@ kotlin {
                 implementation(compose.runtime)
                 implementation(compose.foundation)
                 implementation(compose.material)
-                implementation("media.kamel:kamel-image:0.7.0")
+                implementation("media.kamel:kamel-image:1.0.0-beta.4")
                 implementation("cafe.adriel.voyager:voyager-navigator:$voyagerVersion")
                 implementation("cafe.adriel.voyager:voyager-bottom-sheet-navigator:$voyagerVersion")
                 implementation("cafe.adriel.voyager:voyager-tab-navigator:$voyagerVersion")
@@ -55,7 +63,7 @@ kotlin {
         val androidMain by getting {
             dependsOn(commonMain)
             dependencies {
-                implementation("io.ktor:ktor-client-android:2.3.2")
+                implementation("io.ktor:ktor-client-android:3.0.0-wasm2")
             }
         }
 
@@ -63,8 +71,8 @@ kotlin {
             dependencies {
                 dependsOn(commonMain)
                 implementation(compose.desktop.currentOs)
-                implementation("media.kamel:kamel-image:0.7.0")
-                implementation("io.ktor:ktor-client-java:2.3.2")
+                implementation("media.kamel:kamel-image:1.0.0-beta.4")
+                implementation("io.ktor:ktor-client-java:3.0.0-wasm2")
             }
         }
 
@@ -80,6 +88,17 @@ kotlin {
         }
         val iosSimulatorArm64Main by getting {
             dependsOn(iosMain)
+        }
+
+        val jsWasmMain by creating {
+            dependsOn(commonMain)
+        }
+
+        val jsMain by getting {
+            dependsOn(jsWasmMain)
+        }
+        val wasmJsMain by getting {
+            dependsOn(jsWasmMain)
         }
     }
 }
