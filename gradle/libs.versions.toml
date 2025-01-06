@@ -24,7 +24,7 @@ sqldelight-android-driver = { module = "app.cash.sqldelight:android-driver", ver
 sqldelight-native-driver = { module = "app.cash.sqldelight:native-driver", version.ref = "sqlDelightVersion"}
 coil = { module = "io.coil-kt.coil3:coil", version.ref = "coilVersion" }
 coil-compose = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coilVersion" }
-coil-network-ktor = { module = "io.coil-kt.coil3:coil-network-ktor2", version.ref = "coilVersion" }
+coil-network-ktor = { module = "io.coil-kt.coil3:coil-network-ktor3", version.ref = "coilVersion" }
 coil-svg = { module = "io.coil-kt.coil3:coil-svg", version.ref = "coilVersion"}
 compose-bom = { module = "androidx.compose:compose-bom", version.ref = "composeBomVersion"}
 compose-ui = { module = "androidx.compose.ui:ui" }

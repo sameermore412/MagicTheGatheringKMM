@@ -47,8 +47,14 @@ fun MagicSetsScreen() {
     var state: LCE<List<List<ScryfallMagicSet>>> by remember { mutableStateOf(LCE.Loading()) }
     val navigator = LocalNavigator.currentOrThrow
     LaunchedEffect("") {
-        val officialSets =  async { provideScryFallService().getSets().data.filter { it.setType == "core" } }
-        val latestSets =  async { provideScryFallService().getSets().data.sortedByDescending { it.releasedAt } }
+        val officialSets =  async { provideScryFallService().getSets().data.filter {
+            it.setType == "core" && (!it.code.startsWith("p") && !it.code.startsWith("t"))
+        }
+        }
+        val latestSets =  async { provideScryFallService().getSets().data.filter {
+            (it.setType == "expansion" || it.setType == "commander") &&
+            (!it.code.startsWith("p") && !it.code.startsWith("t"))
+        }.sortedByDescending { it.releasedAt } }
         state = LCE.Content(listOf(officialSets.await(), latestSets.await()))
     }
     LCEContent(
