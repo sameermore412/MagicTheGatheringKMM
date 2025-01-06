@@ -1,14 +1,13 @@
 plugins {
     // Setting plugin versions here so we don't have to do it somewhere else. "apply false" does not apply the plugin
-    kotlin("multiplatform") version kotlinVersion apply false // Kotlin multiplatform plugin
-    kotlin("native.cocoapods") version kotlinVersion apply false
-    kotlin("jvm") version kotlinVersion apply false
-    kotlin("plugin.compose") version kotlinVersion apply false
-    kotlin("android") version kotlinVersion apply false
-
-    id("com.android.application") version androidGradlePluginVersion apply false
-    id("com.android.library") version androidGradlePluginVersion apply false
-    id("org.jetbrains.compose") version composeVersion apply false
+    alias(libs.plugins.kotlin.jvm) apply false
+    alias(libs.plugins.kotlin.android) apply false
+    alias(libs.plugins.kotlin.multiplatform) apply false
+    alias(libs.plugins.kotlin.native.cocoapods) apply false
+    alias(libs.plugins.android.library) apply false
+    alias(libs.plugins.android.application) apply false
+    alias(libs.plugins.compose.compiler) apply false
+    alias(libs.plugins.compose) apply false
 }
 
 allprojects {

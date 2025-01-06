@@ -8,7 +8,7 @@ kotlin {
     jvm {}
 
     sourceSets {
-        val voyagerVersion = "1.0.0-rc05"
+        val voyagerVersion = "1.0.0-rc09"
         val jvmMain by getting {
             dependencies {
                 implementation(project(":shared-ui"))

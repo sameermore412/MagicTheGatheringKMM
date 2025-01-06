@@ -1,0 +1,44 @@
+[versions]
+activityCompose = "1.9.3"
+androidGradlePlugin = "8.7.3"
+appcompat = "1.7.0"
+kotlinVersion = "2.1.0"
+ktorClientAndroid = "3.0.0-wasm2"
+ktorVersion = "3.0.3"
+sqlDelightVersion = "2.0.2"
+composeVersion = "1.6.10"
+composeBomVersion = "2024.12.01"
+coilVersion = "3.0.4"
+
+[libraries]
+activity-compose = { module = "androidx.activity:activity-compose", version.ref = "activityCompose" }
+appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompat" }
+ktor-client-android = { module = "io.ktor:ktor-client-android", version.ref = "ktorVersion" }
+ktor-client-content-negotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktorVersion" }
+ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktorVersion" }
+ktor-client-ios = { module = "io.ktor:ktor-client-ios", version.ref = "ktorVersion" }
+ktor-client-java = { module = "io.ktor:ktor-client-java", version.ref = "ktorVersion" }
+ktor-client-logging = { module = "io.ktor:ktor-client-logging", version.ref = "ktorVersion" }
+ktor-serialization-kotlinx-json = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktorVersion" }
+sqldelight-android-driver = { module = "app.cash.sqldelight:android-driver", version.ref = "sqlDelightVersion"}
+sqldelight-native-driver = { module = "app.cash.sqldelight:native-driver", version.ref = "sqlDelightVersion"}
+coil = { module = "io.coil-kt.coil3:coil", version.ref = "coilVersion" }
+coil-compose = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coilVersion" }
+coil-network-ktor = { module = "io.coil-kt.coil3:coil-network-ktor2", version.ref = "coilVersion" }
+coil-svg = { module = "io.coil-kt.coil3:coil-svg", version.ref = "coilVersion"}
+compose-bom = { module = "androidx.compose:compose-bom", version.ref = "composeBomVersion"}
+compose-ui = { module = "androidx.compose.ui:ui" }
+compose-ui-graphics = { module = "androidx.compose.ui:ui-graphics" }
+compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview" }
+
+[plugins]
+kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlinVersion"}
+kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlinVersion"}
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlinVersion"}
+kotlin-native-cocoapods = { id = "org.jetbrains.kotlin.native.cocoapods", version.ref = "kotlinVersion"}
+android-application = { id = "com.android.application", version.ref = "androidGradlePlugin"}
+android-library = { id = "com.android.library", version.ref = "androidGradlePlugin"}
+sqldelight = { id = "app.cash.sqldelight", version.ref = "sqlDelightVersion"}
+compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlinVersion" }
+compose = { id = "org.jetbrains.compose", version.ref = "composeVersion" }
+

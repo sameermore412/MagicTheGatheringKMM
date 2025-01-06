@@ -11,13 +11,13 @@ kotlin {
     iosX64()
     iosArm64()
     iosSimulatorArm64()
-    js {
-        browser()
-        useEsModules()
-    }
-    wasmJs() {
-        browser()
-    }
+//    js {
+//        browser()
+//        useEsModules()
+//    }
+//    wasmJs() {
+//        browser()
+//    }
 
 
     cocoapods {
@@ -35,11 +35,11 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation("io.ktor:ktor-serialization-kotlinx-json:3.0.0-wasm2")
-                implementation("io.ktor:ktor-client-core:3.0.0-wasm2")
-                implementation("io.ktor:ktor-client-logging:3.0.0-wasm2")
-                implementation("io.ktor:ktor-client-content-negotiation:3.0.0-wasm2")
-                implementation("io.ktor:ktor-serialization-kotlinx-json:3.0.0-wasm2")
+                implementation(libs.ktor.serialization.kotlinx.json)
+                implementation(libs.ktor.client.core)
+                implementation(libs.ktor.client.logging)
+                implementation(libs.ktor.client.content.negotiation)
+                implementation(libs.ktor.serialization.kotlinx.json)
             }
         }
         val desktopMain by getting {
@@ -49,7 +49,7 @@ kotlin {
         val iosMain by creating {
             dependsOn(commonMain)
             dependencies {
-                implementation("io.ktor:ktor-client-ios:3.0.0-wasm2")
+                implementation(libs.ktor.client.ios)
             }
         }
 
@@ -64,16 +64,16 @@ kotlin {
         }
 
 
-        val jsWasmMain by creating {
-            dependsOn(commonMain)
-        }
-
-        val jsMain by getting {
-            dependsOn(jsWasmMain)
-        }
-
-        val wasmJsMain by getting {
-            dependsOn(jsWasmMain)
-        }
+//        val jsWasmMain by creating {
+//            dependsOn(commonMain)
+//        }
+//
+//        val jsMain by getting {
+//            dependsOn(jsWasmMain)
+//        }
+//
+//        val wasmJsMain by getting {
+//            dependsOn(jsWasmMain)
+//        }
     }
 }

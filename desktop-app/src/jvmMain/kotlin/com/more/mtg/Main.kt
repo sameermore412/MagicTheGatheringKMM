@@ -18,11 +18,11 @@ import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
 import cafe.adriel.voyager.navigator.CurrentScreen
 import cafe.adriel.voyager.navigator.Navigator
-import com.more.mtg.sharedui.screens.MagicSetsScreen
+import com.more.mtg.sharedui.screens.MagicSetsScreenSinglton
 import com.more.mtg.sharedui.widgets.MagicLoadingIndicator
 
 fun main() = application {
-    Navigator(MagicSetsScreen) { navigator ->
+    Navigator(MagicSetsScreenSinglton) { navigator ->
         Window(
             title = "Magic The Gathering App",
             onCloseRequest = ::exitApplication,

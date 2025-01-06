@@ -1,7 +1,0 @@
-const val composeVersion = "1.6.10"
-const val composeWasmVersion = "1.4.0-dev-wasm08"
-const val composeCompilerVersion = "1.5.1"
-const val kotlinVersion = "2.0.0"
-const val androidGradlePluginVersion = "8.3.0"
-const val androidComposeBomVersion = "2024.05.00"
-const val androidComposeCompilerVersion = "1.5.3"

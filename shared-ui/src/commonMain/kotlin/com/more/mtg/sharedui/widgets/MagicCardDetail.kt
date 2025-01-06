@@ -18,6 +18,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.painter.ColorPainter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.Placeholder
 import androidx.compose.ui.text.PlaceholderVerticalAlign
@@ -25,12 +26,15 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
+import coil3.ImageLoader
+import coil3.compose.AsyncImage
+import coil3.compose.LocalPlatformContext
+import coil3.request.ImageRequest
+import coil3.svg.SvgDecoder
 import com.more.mtg.sharedui.CardAspectRatio
 import com.more.mtg.sharedui.MiniCardWidth
 import com.more.shareddata.ScryfallSymbol
 import com.more.shareddata.ScryfallSymbolsStore
-import io.kamel.image.KamelImage
-import io.kamel.image.asyncPainterResource
 
 @Composable
 fun MagicCardDetail(magicCard: MagicCard = testCard, modifier: Modifier = Modifier) {
@@ -100,24 +104,36 @@ fun MiniCardImage(magicCard: MagicCard, modifier: Modifier = Modifier) {
 
 @Composable
 fun MtgCardImage(url: String, modifier: Modifier = Modifier) {
-    val painter = asyncPainterResource(data = url) {
-    }
-
-    KamelImage(resource = painter,
+    AsyncImage(
+        model = ImageRequest
+            .Builder(LocalPlatformContext.current)
+            .data(url)
+            .build(),
         contentDescription = "",
+        placeholder = ColorPainter(Color.Red),
         contentScale = ContentScale.FillWidth,
-        modifier = modifier)
+        modifier = modifier
+    )
 }
 
 @Composable
 fun MtgImage(url: String, contentDescription: String = "", modifier: Modifier = Modifier) {
-    val painter = asyncPainterResource(data = url) {
-    }
+    ImageLoader.Builder(LocalPlatformContext.current)
+        .components {
+            add(SvgDecoder.Factory())
+        }
+        .build()
 
-    KamelImage(resource = painter,
+    AsyncImage(
+        model = ImageRequest
+            .Builder(LocalPlatformContext.current)
+            .data(url)
+            .build(),
         contentDescription = contentDescription,
+        placeholder = ColorPainter(Color.Red),
         contentScale = ContentScale.FillWidth,
-        modifier = modifier)
+        modifier = modifier
+    )
 }
 
 data class MagicCard(
