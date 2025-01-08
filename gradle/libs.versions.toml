@@ -3,8 +3,11 @@ activityCompose = "1.9.3"
 androidGradlePlugin = "8.7.3"
 appcompat = "1.7.0"
 kotlinVersion = "2.1.0"
+kotlinxCoroutines= "1.10.1"
 ktorClientAndroid = "3.0.0-wasm2"
 ktorVersion = "3.0.3"
+lifecycleViewmodelCompose = "2.8.2"
+navigationCompose = "2.8.0-alpha10"
 sqlDelightVersion = "2.0.2"
 composeVersion = "1.6.10"
 composeBomVersion = "2024.12.01"
@@ -13,6 +16,8 @@ coilVersion = "3.0.4"
 [libraries]
 activity-compose = { module = "androidx.activity:activity-compose", version.ref = "activityCompose" }
 appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompat" }
+kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinxCoroutines" }
+kotlinx-coroutines-swing = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-swing", version.ref = "kotlinxCoroutines" }
 ktor-client-android = { module = "io.ktor:ktor-client-android", version.ref = "ktorVersion" }
 ktor-client-content-negotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktorVersion" }
 ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktorVersion" }
@@ -20,6 +25,8 @@ ktor-client-ios = { module = "io.ktor:ktor-client-ios", version.ref = "ktorVersi
 ktor-client-java = { module = "io.ktor:ktor-client-java", version.ref = "ktorVersion" }
 ktor-client-logging = { module = "io.ktor:ktor-client-logging", version.ref = "ktorVersion" }
 ktor-serialization-kotlinx-json = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktorVersion" }
+lifecycle-viewmodel-compose = { module = "org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycleViewmodelCompose" }
+navigation-compose = { module = "org.jetbrains.androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
 sqldelight-android-driver = { module = "app.cash.sqldelight:android-driver", version.ref = "sqlDelightVersion"}
 sqldelight-native-driver = { module = "app.cash.sqldelight:native-driver", version.ref = "sqlDelightVersion"}
 coil = { module = "io.coil-kt.coil3:coil", version.ref = "coilVersion" }

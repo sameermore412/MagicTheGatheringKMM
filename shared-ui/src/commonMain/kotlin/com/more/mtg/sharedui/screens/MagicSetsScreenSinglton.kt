@@ -15,25 +15,24 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import cafe.adriel.voyager.core.screen.Screen
-import cafe.adriel.voyager.navigator.LocalNavigator
-import cafe.adriel.voyager.navigator.currentOrThrow
 import com.more.mtg.sharedui.CardAspectRatio
+import com.more.mtg.sharedui.models.DisplaySets
 import com.more.mtg.sharedui.models.LCE
+import com.more.mtg.sharedui.models.SetsScreenViewModel
 import com.more.mtg.sharedui.widgets.HorizontalScrollingRow
 import com.more.mtg.sharedui.widgets.LCEContent
 import com.more.mtg.sharedui.widgets.MtgImage
-import com.more.shareddata.network.provideScryFallService
 import com.more.shareddata.network.scryfall.ScryfallMagicSet
-import kotlinx.coroutines.async
 
 object MagicSetsScreenSinglton: Screen {
     @Composable
@@ -43,34 +42,28 @@ object MagicSetsScreenSinglton: Screen {
 }
 
 @Composable
-fun MagicSetsScreen() {
-    var state: LCE<List<List<ScryfallMagicSet>>> by remember { mutableStateOf(LCE.Loading()) }
-    val navigator = LocalNavigator.currentOrThrow
+fun MagicSetsScreen(viewModel: SetsScreenViewModel = viewModel { SetsScreenViewModel() }) {
+    val state: State<LCE<DisplaySets>> by remember { mutableStateOf(viewModel.state) }
+    //val navigator = LocalNavigator.currentOrThrow
     LaunchedEffect("") {
-        val officialSets =  async { provideScryFallService().getSets().data.filter {
-            it.setType == "core" && (!it.code.startsWith("p") && !it.code.startsWith("t"))
-        }
-        }
-        val latestSets =  async { provideScryFallService().getSets().data.filter {
-            (it.setType == "expansion" || it.setType == "commander") &&
-            (!it.code.startsWith("p") && !it.code.startsWith("t"))
-        }.sortedByDescending { it.releasedAt } }
-        state = LCE.Content(listOf(officialSets.await(), latestSets.await()))
+        viewModel.fetchSets()
     }
     LCEContent(
-        state = state,
-        content = {setsList -> MagicSets(setsList) {setId -> navigator.push(MagicSetDetailScreen(setId))} },
+        state = state.value,
+        content = {setsList -> MagicSets(setsList) {setId ->
+            //Go somewhere else
+        } },
         errorContent = {error -> Text("error") },
     )
 }
 
 
 @Composable
-fun MagicSets(magicSets: List<List<ScryfallMagicSet>>, onSetClicked: (setId: String) -> Unit) {
+fun MagicSets(magicSets: DisplaySets, onSetClicked: (setId: String) -> Unit) {
     Column(modifier = Modifier.fillMaxSize()) {
         Text("Official Sets", style = MaterialTheme.typography.h5, modifier = Modifier.padding(start = 8.dp))
         HorizontalScrollingRow(
-            itemList = magicSets[0],
+            itemList = magicSets.officialSets,
             contentPadding = 8.dp,
             paddingBetweenChildren = 16.dp,
         ) {itemData ->
@@ -79,7 +72,7 @@ fun MagicSets(magicSets: List<List<ScryfallMagicSet>>, onSetClicked: (setId: Str
         Spacer(modifier = Modifier.height(16.dp))
         Text("Latest Sets", style = MaterialTheme.typography.h5, modifier = Modifier.padding(start = 8.dp))
         HorizontalScrollingRow(
-            itemList = magicSets[1],
+            itemList = magicSets.latestSets,
             contentPadding = 8.dp,
             paddingBetweenChildren = 16.dp,
         ) {itemData ->

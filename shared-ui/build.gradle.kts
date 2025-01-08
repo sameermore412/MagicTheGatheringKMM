@@ -59,6 +59,8 @@ kotlin {
                 implementation(libs.coil.compose)
                 implementation(libs.coil.network.ktor)
                 implementation(libs.coil.svg)
+                implementation(libs.lifecycle.viewmodel.compose)
+                implementation(libs.kotlinx.coroutines.core)
             }
         }
 
@@ -74,6 +76,7 @@ kotlin {
                 dependsOn(commonMain)
                 implementation(compose.desktop.currentOs)
                 implementation(libs.ktor.client.java)
+                implementation(libs.kotlinx.coroutines.swing)
             }
         }
 
